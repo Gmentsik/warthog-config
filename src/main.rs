@@ -1,4 +1,5 @@
 #![warn(clippy::pedantic)]
+#![windows_subsystem = "windows"]
 
 use std::fmt;
 use clap::{Arg, App};
