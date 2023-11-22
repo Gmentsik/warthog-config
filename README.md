@@ -72,3 +72,13 @@ OPTIONS:
     ./warthog-config -i 5
     ```
 
+# How to use with Microsoft Flight Simulator 
+
+1. Download & Install SPAD.neXt (https://www.spadnext.com/download/download-spad-next.html)
+2. Go to Settings -> Devices -> Scriptpanel and turn on Script-Panel Support
+3. A new icon should appear between profiles and devices in the left-hand vertical menue
+4. Click on Add Event -> Conditional Action
+5. Here you can define the contion (eg. AUTOPILOT MASTER equals 1)
+6. As action add "Advanced -> Run external Program"
+7. Point to the exe you downloaded here from the releases page in the field "Executable" (eg "G:\warthog-config.exe")
+8. In the command-line arguments field you can write anything, check the examples above. (eg "-5 1" to turn LED 5 on)
