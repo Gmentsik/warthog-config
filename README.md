@@ -20,18 +20,19 @@ USAGE:
     warthog-config [FLAGS] [OPTIONS]
 
 FLAGS:
-    -b, --backlight    Turn the backlight on
-    -h, --help         Prints help information
-    -1, --led-1        Turn the first LED on
-    -2, --led-2        Turn the second LED on
-    -3, --led-3        Turn the third LED on
-    -4, --led-4        Turn the fourth LED on
-    -5, --led-5        Turn the fifth LED on
+    -h, --help         Print help information
     -r, --read-only    Only show the current state, don't change the LEDs
-    -V, --version      Prints version information
+    -V, --version      Print version information
 
 OPTIONS:
+    -1, --led-1 <led-1>            Turn the first LED on or off, use 0 to turn it off or 1 to turn it on
+    -2, --led-2 <led-2>            Turn the second LED on or off, use 0 to turn it off or 1 to turn it on
+    -3, --led-3 <led-3>            Turn the third LED on or off, use 0 to turn it off or 1 to turn it on
+    -4, --led-4 <led-4>            Turn the fourth LED on or off, use 0 to turn it off or 1 to turn it on
+    -5, --led-5 <led-5>            Turn the fifth LED on or off, use 0 to turn it off or 1 to turn it on
+    -b <backlight>                 Turn the backlight on or off, default on, use 0 to turn it off or 1 to turn it on
     -i, --intensity <intensity>    Set the intensity of the backlight (0-5, where 0 in off and 5 is the brightest) [default: 2]
+    -l, --leds <leds>              Turn the all LEDs on or off, use 0 to turn it off or 1 to turn it on
 ```
 
 ### Examples

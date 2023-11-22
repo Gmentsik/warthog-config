@@ -14,6 +14,8 @@ bitflags! {
         const LED_3     = 0b001_0000;
         const LED_4     = 0b000_0001;
         const LED_5     = 0b100_0000;
+        const LED_OFF   = 0b000_1000;
+        const LED_ON    = 0b111_1111;
     }
 }
 

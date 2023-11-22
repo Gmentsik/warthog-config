@@ -28,28 +28,39 @@ fn command_line_args<'a>() -> App<'a> {
         .about(built_info::PKG_DESCRIPTION)
         .arg(Arg::new("backlight")
             .short('b')
-            .long("backlight")
-            .about("Turn the backlight on"))
+            .takes_value(true)
+            .validator_regex(Regex::new("[0-1]").unwrap(), "must be 0 (off) or 1 (on)")
+            .about("Turn the backlight on or off, default on, use 0 to turn it off or 1 to turn it on"))
         .arg(Arg::new("led-1")
             .short('1')
             .long("led-1")
-            .about("Turn the first LED on"))
+            .takes_value(true)
+            .validator_regex(Regex::new("[0-1]").unwrap(), "must be 0 (off) or 1 (on)")
+            .about("Turn the first LED on or off, use 0 to turn it off or 1 to turn it on"))
         .arg(Arg::new("led-2")
             .short('2')
             .long("led-2")
-            .about("Turn the second LED on"))
+            .takes_value(true)
+            .validator_regex(Regex::new("[0-1]").unwrap(), "must be 0 (off) or 1 (on)")
+            .about("Turn the second LED on or off, use 0 to turn it off or 1 to turn it on"))
         .arg(Arg::new("led-3")
             .short('3')
             .long("led-3")
-            .about("Turn the third LED on"))
+            .takes_value(true)
+            .validator_regex(Regex::new("[0-1]").unwrap(), "must be 0 (off) or 1 (on)")
+            .about("Turn the third LED on or off, use 0 to turn it off or 1 to turn it on"))
         .arg(Arg::new("led-4")
             .short('4')
             .long("led-4")
-            .about("Turn the fourth LED on"))
+            .takes_value(true)
+            .validator_regex(Regex::new("[0-1]").unwrap(), "must be 0 (off) or 1 (on)")
+            .about("Turn the fourth LED on or off, use 0 to turn it off or 1 to turn it on"))
         .arg(Arg::new("led-5")
             .short('5')
             .long("led-5")
-            .about("Turn the fifth LED on"))
+            .takes_value(true)
+            .validator_regex(Regex::new("[0-1]").unwrap(), "must be 0 (off) or 1 (on)")
+            .about("Turn the fifth LED on or off, use 0 to turn it off or 1 to turn it on"))
         .arg(Arg::new("intensity")
             .short('i')
             .long("intensity")
@@ -61,6 +72,12 @@ fn command_line_args<'a>() -> App<'a> {
             .short('r')
             .long("read-only")
             .about("Only show the current state, don't change the LEDs"))
+        .arg(Arg::new("leds")
+            .short('l')
+            .long("leds")
+            .takes_value(true)
+            .validator_regex(Regex::new("[0-1]").unwrap(), "must be 0 (off) or 1 (on)")
+            .about("Turn the all LEDs on or off, use 0 to turn it off or 1 to turn it on"))
 }
 
 fn main() -> Result<(), CustomError> {
@@ -139,26 +156,52 @@ fn main() -> Result<(), CustomError> {
     }
 
     let intensity: u8 = matches.value_of_t("intensity").unwrap();
-    let mut leds = warthog::ThrottleLEDState::empty();
+    
+    let mut leds = current_leds;
 
-    if matches.is_present("backlight") {
+    if matches.value_of("leds") == Some("1") {
+        leds = warthog::ThrottleLEDState::LED_ON;
+    } else if matches.value_of("leds") == Some("0") {
+        leds = warthog::ThrottleLEDState::LED_OFF;
+    }
+
+
+    if matches.value_of("backlight") == Some("1") {
         leds |= warthog::ThrottleLEDState::BACKLIGHT;
+    } else if matches.value_of("backlight") == Some("0") {
+        leds &= !warthog::ThrottleLEDState::BACKLIGHT;
     }
-    if matches.is_present("led-1") {
+
+    if matches.value_of("led-1") == Some("1") {
         leds |= warthog::ThrottleLEDState::LED_1;
+    } else if matches.value_of("led-1") == Some("0") {
+        leds &= !warthog::ThrottleLEDState::LED_1;
     }
-    if matches.is_present("led-2") {
+
+    if matches.value_of("led-2") == Some("1") {
         leds |= warthog::ThrottleLEDState::LED_2;
-    }
-    if matches.is_present("led-3") {
+    } else if matches.value_of("led-2") == Some("0") {
+        leds &= !warthog::ThrottleLEDState::LED_2;
+    }  
+    
+    if matches.value_of("led-3") == Some("1") {
         leds |= warthog::ThrottleLEDState::LED_3;
-    }
-    if matches.is_present("led-4") {
+    } else if matches.value_of("led-3") == Some("0") {
+        leds &= !warthog::ThrottleLEDState::LED_3;
+    } 
+    
+    if matches.value_of("led-4") == Some("1") {
         leds |= warthog::ThrottleLEDState::LED_4;
+    } else if matches.value_of("led-4") == Some("0") {
+        leds &= !warthog::ThrottleLEDState::LED_4;
     }
-    if matches.is_present("led-5") {
+
+    if matches.value_of("led-5") == Some("1") {
         leds |= warthog::ThrottleLEDState::LED_5;
+    } else if matches.value_of("led-5") == Some("0") {
+        leds &= !warthog::ThrottleLEDState::LED_5;
     }
+
 
     println!();
 
